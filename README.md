@@ -8,3 +8,5 @@ procjam2015-blzrs-three_things
 ### EXAMPLE
 
 ### API
+
+http://audior.ec/blog/recording-mp3-using-only-html5-and-javascript-recordmp3-js/
