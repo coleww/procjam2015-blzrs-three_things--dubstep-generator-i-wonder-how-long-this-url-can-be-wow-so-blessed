@@ -28,7 +28,6 @@ Sequencer.prototype.run = function(){
   this.interval = window.setInterval(function(){
     that.instruments.forEach(function(instrument){
       if (instrument.name == 'solo' ) {
-
         if (that.section == 'bridge') instrument.play(that.position, that.ac, that.key, that.section, tick)
       } else {
         instrument.play(that.position, that.ac, that.key, that.section);
@@ -42,30 +41,6 @@ Sequencer.prototype.run = function(){
       });
       that.position = 0;
       that.section = that.sections.shift()
-
-
-
-
-      // UMMM if there isn't one then i think u should stop? i guess?
-      // TODO
-      // DOTHIS
-      // ITS REALLY BAD
-
-      // EXCEPT NOT ON THE INTRO OR BRIDGE, PUT SOME LIKE "OHHHHH YEAHHH WHOOOO HOOOOO AT RANDOM THERE INSTEAD!"
-
-
-      // inter = window.setInterval(function(){
-
-        // HMMM kill
-        // console.log('.')
-      //   if(ii == 16) window.clearInterval(inter)
-      // }, tick / 16.0)
-      // ..../ hmm set interval to updat ethe progress bar, and then wipe it on next run?
-
-
-      // UMMM how to animate the singing...hmmm...there could be magic here...
-      // OH SHIT A PROGRESS BAR DOES THIS EXACTLY! SET IT ON A TIMER FOR THE LENGTH OF THE THING, THEN DUMP IT.
-      // FUCK YEAH FUCK YEAH SCIENCE
 
       if(!that.section) {
         that.stop()
