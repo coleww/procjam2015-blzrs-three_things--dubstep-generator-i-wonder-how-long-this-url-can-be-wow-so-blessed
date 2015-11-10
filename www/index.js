@@ -1,0 +1,1 @@
+var seq = require('../sequencer')
