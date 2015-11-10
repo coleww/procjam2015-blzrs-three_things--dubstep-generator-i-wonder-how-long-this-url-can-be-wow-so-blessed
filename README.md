@@ -1,12 +1,23 @@
-procjam2015-blzrs-three_things
-----------------
+THREE THINGS
+------------------------------------------------------------
 
-[![NPM](https://nodei.co/npm/procjam2015-blzrs-three_things.png)](https://nodei.co/npm/procjam2015-blzrs-three_things/)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
-[![Build Status](https://secure.travis-ci.org/coleww/procjam2015-blzrs-three_things.png)](http://travis-ci.org/coleww/procjam2015-blzrs-three_things)
+1.  one
+2. two
+3. two
 
-### EXAMPLE
 
-### API
 
-http://audior.ec/blog/recording-mp3-using-only-html5-and-javascript-recordmp3-js/
+
+
+------------------------------------------
+
+### development
+
+ oh no dont even bother
+
+
+
+
+---------------------------------------------
+
+https://www.npmjs.com/package/recorderjs
