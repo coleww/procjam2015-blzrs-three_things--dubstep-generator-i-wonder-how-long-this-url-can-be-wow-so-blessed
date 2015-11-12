@@ -683,9 +683,9 @@
       }
     }
   ],
-  "bpm":87,
+  "bpm":43,
   "key":{
     "tonic":"F#2",
     "scale":"pentMaj"},
-  "steps":16
+  "steps":4
 }

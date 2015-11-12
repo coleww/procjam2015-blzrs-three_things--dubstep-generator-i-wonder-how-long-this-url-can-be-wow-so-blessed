@@ -5,13 +5,13 @@ function getTick(bpm){
 }
 
 var Sequencer = function(data){
-  window.AudioContext = window.AudioContext || window.webkitAudioContext;
-  this.ac = new AudioContext();
+  var ac = new (window.AudioContext || window.webkitAudioContext)();
+  this.ac = ac
   this.bpm = data.bpm;
-  this.instruments = createInstruments(this.ac, data.instruments);
+  this.instruments = createInstruments(ac, data.instruments);
   this.interval = null;
   this.key = data.key;
-  this.section = data.section || "outro"
+  this.section = "verse"//data.section || "verse"
   this.sections = data.sections || ["verse", "verse", "verse", "verse", "chorus", "chorus"]
 
   this.nextSections = {
@@ -42,10 +42,9 @@ Sequencer.prototype.run = function(){
 
     if(that.position >= that.steps) {
       that.instruments.forEach(function(instrument){
-        instrument.next(that.section);
+        instrument.current = 0;
       });
       that.position = 0;
-
 
       // RIGHT HERE DO THAT MAGIC!
       // MAKE THE SECTIONS THE MAGIC!

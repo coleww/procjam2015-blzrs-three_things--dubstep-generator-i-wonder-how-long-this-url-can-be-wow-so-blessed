@@ -27,13 +27,16 @@ Instrument.prototype.play = function(pos, ac, key, section, tick){
       // WRAP THIS BUSINESS?
 
   // HRRRM handle if it is the vox?
+  // TODO: make this a function that takes a this cuse the timeout thing below for arpegiis is super absurd
       if (this.name == 'vox') {
         // play the screamy voice instrument, but pull the whatever
         // um it would be noteInt for which sample 2 play
-      } else if(freq) {
-        this.player.frequency.setValueAtTime(freq, ac.currentTime);
+      } else if(freq && ['sine', 'triangle', 'square', 'sawtooth'].indexOf(this.type !== -1)) {
+        this.player.frequency.value = freq//, ac.currentTime);
         this.player.start(ac.currentTime);
         this.playing = true;
+      } else if (freq) {
+        // ITS A CUSTOM SYNTH OBJECT!!! WOOHOOO!!!!
       }
       var that = this
 
@@ -48,13 +51,15 @@ Instrument.prototype.play = function(pos, ac, key, section, tick){
 
           // TODO:
           // WRAP that BUSINESS?
-          if(freq2){
+          if(freq2 && ['sine', 'triangle', 'square', 'sawtooth'].indexOf(that.type !== -1)){
             that.player.frequency.setValueAtTime(freq2, ac.currentTime);
             that.player.start(ac.currentTime);
             window.setTimeout(function() {
               that.player.stop(0)
             }, tick / 2.0)
             that.playing = true;
+          } else if (freq2) {
+             // ITS A CUSTOM SYNTH OBJECT!!! WOOHOOO!!!!
           }
         }, tick / 2.0)
       }
@@ -71,7 +76,7 @@ Instrument.prototype.play = function(pos, ac, key, section, tick){
       }
     } else {
       // just a drum!
-      this.player.start(ac.currentTime);
+      // this.player.start(ac.currentTime);
     }
   } else {
     if(this.type !== "drum"){
@@ -82,14 +87,5 @@ Instrument.prototype.play = function(pos, ac, key, section, tick){
     }
   }
 }
-
-Instrument.prototype.next = function(section){
-  if(this.name !== 'solo'){
-    var nexts = this.sections[section].nexts[this.current];
-    var next = nexts[~~(Math.random() * nexts.length)];
-    var same = next === this.current;
-    this.current = next;
-  }
-};
 
 module.exports = Instrument;
