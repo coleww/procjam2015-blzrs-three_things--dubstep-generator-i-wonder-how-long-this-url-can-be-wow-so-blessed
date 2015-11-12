@@ -11,7 +11,7 @@ var Sequencer = function(data){
   this.instruments = createInstruments(this.ac, data.instruments);
   this.interval = null;
   this.key = data.key;
-  this.section = data.section || "intro"
+  this.section = data.section || "outro"
   this.sections = data.sections || ["verse", "verse", "verse", "verse", "chorus", "chorus"]
 
   this.nextSections = {

@@ -17,9 +17,15 @@ module.exports = function createInstruments(ac, instrumentData){
     var player;
     if(data.type == 'drum'){
       player = new Sampler(ac, 'samples/'+data.name+'.wav');
+    } else if (data.type == 'vox') {
+      // ...
+
+
     } else {
 
       // ahh so like use the modules here? hmm.
+
+
       player = new Oscillator(ac);
       player.type = data.type;
     }
