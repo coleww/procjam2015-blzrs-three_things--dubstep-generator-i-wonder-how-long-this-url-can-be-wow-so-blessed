@@ -12,27 +12,31 @@ var Instrument = function(player, opts, wobble){
 }
 
 Instrument.prototype.play = function(pos, ac, key, section, tick){
-  // console.log(this.sections[section], this.current, pos)
-  if(Math.random() < this.sections[section].probs[this.current][pos]){
-    if(this.type !== "drum"){
+  console.log(section, this.sections[section], this.current, pos)
+  if(Math.random() < this.sections[section].probs[this.current][pos] && (pos % this.sections[section].mod == 0)){
+    if (this.type !== 'drum') {
       var noteInt = this.sections[section].notes[this.current][pos][~~(Math.random() * this.sections[section].notes[this.current][pos].length)]
       if(!noteInt) noteInt = 0;
-      var freq = int2freq(~~noteInt, key);
+      var freq
+      try {
+        freq = int2freq(~~noteInt, key);
+      } catch (e) {
+        if (this.name !== 'vox') console.log(e)
+      }
       // TODO:
       // WRAP THIS BUSINESS?
 
-
-
-      if(freq) {
+  // HRRRM handle if it is the vox?
+      if (this.name == 'vox') {
+        // play the screamy voice instrument, but pull the whatever
+        // um it would be noteInt for which sample 2 play
+      } else if(freq) {
         this.player.frequency.setValueAtTime(freq, ac.currentTime);
-        this.player.start();
-
-
-
-
+        this.player.start(ac.currentTime);
         this.playing = true;
       }
       var that = this
+
 
 
       if(this.name == 'solo' && Math.random() < this.sections[section].probs[this.current][pos]){
@@ -46,7 +50,7 @@ Instrument.prototype.play = function(pos, ac, key, section, tick){
           // WRAP that BUSINESS?
           if(freq2){
             that.player.frequency.setValueAtTime(freq2, ac.currentTime);
-            that.player.start();
+            that.player.start(ac.currentTime);
             window.setTimeout(function() {
               that.player.stop(0)
             }, tick / 2.0)
@@ -65,11 +69,9 @@ Instrument.prototype.play = function(pos, ac, key, section, tick){
           that.playing = true;
         }, tick / 2.0)
       }
-
-
-
     } else {
-      this.player.start();
+      // just a drum!
+      this.player.start(ac.currentTime);
     }
   } else {
     if(this.type !== "drum"){

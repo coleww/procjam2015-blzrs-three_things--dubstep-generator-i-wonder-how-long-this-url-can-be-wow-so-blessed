@@ -11,9 +11,6 @@ var Sequencer = function(data){
   this.instruments = createInstruments(this.ac, data.instruments);
   this.interval = null;
   this.key = data.key;
-  this.lines = lines
-  console.log('SNOW: ', this.lines.length)
-  console.log(this.lines)
   this.section = data.section || "intro"
   this.sections = data.sections || ["verse", "verse", "verse", "verse", "chorus", "chorus"]
 

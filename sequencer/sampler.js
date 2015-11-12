@@ -1,4 +1,4 @@
-var SamplePlayer = require('openmusic-sample-player')
+var SamplePlayer = require('@coleww/openmusic-sample-player')
 var loadSample2Buff = require('load-sample-2-buff')
 
 module.exports = function(ac, path){
