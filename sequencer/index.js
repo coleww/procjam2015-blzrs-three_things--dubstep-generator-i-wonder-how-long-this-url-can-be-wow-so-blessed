@@ -57,8 +57,8 @@ Sequencer.prototype.run = function(){
 
       that.position = 0;
       var old = that.section
-      // that.section = that.sections.shift()
-
+      that.section = that.sections.shift()
+      if (that.section !== old) console.log('ADVANCING')
       that.instruments.forEach(function(instrument){
         instrument.next(that.section);
       });
