@@ -3,7 +3,7 @@
   var WORKER_WAV_PATH = 'recorderWorker.js';
   var WORKER_MP3_PATH = 'recorderWorkerMP3.js';
 
-  module.exports =  function(source, cfg){
+  var Recorder =  function(source, cfg){
     var config = cfg || {};
     var bufferLen = config.bufferLen || 4096;
     this.context = source.context;
@@ -84,7 +84,7 @@
     click.initEvent("click", true, true);
     link.dispatchEvent(click);
   }
-
+module.exports = Recorder
 //   window.Recorder = Recorder;
 
 // })(window);

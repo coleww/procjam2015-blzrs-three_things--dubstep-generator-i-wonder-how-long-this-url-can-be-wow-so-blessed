@@ -24,6 +24,7 @@ module.exports = function createInstruments(ac, instrumentData, vol){
     if(data.type == 'drum'){
       player = new Sampler(ac, 'samples/' + data.name + '.wav')
     } else {
+      console.log(data.type)
       player = insts[data.type](ac)
     }
 
@@ -44,7 +45,7 @@ module.exports = function createInstruments(ac, instrumentData, vol){
     filter.connect(distortion)
     distortion.connect(ac.destination);
 
-    var instrument = new Instrument(player, data, wobble);
+    var instrument = new Instrument(player, data);
     instruments.push(instrument)
   });
 

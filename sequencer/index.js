@@ -15,7 +15,7 @@ var Sequencer = function(data){
   this.sections = data.sections || ["verse", "verse", "verse", "verse", "chorus", "chorus"]
   this.position = 0;
   this.steps = data.steps;
-  this.vol = this.ac.createGainNode()
+  this.vol = this.ac.createGain()
   this.recorder = new Recorder(this.vol, {workerPath: 'js/recorderjs/recorderWorkerMP3.js'})
 };
 
@@ -57,43 +57,12 @@ Sequencer.prototype.run = function(){
 
       that.position = 0;
       var old = that.section
-      that.section = that.sections.shift()
+      // that.section = that.sections.shift()
 
       that.instruments.forEach(function(instrument){
-        instrument.next();
+        instrument.next(that.section);
       });
 
-
-      // UMMM if there isn't one then i think u should stop? i guess?
-      // TODO
-      // DOTHIS
-      // ITS REALLY BAD
-
-      // EXCEPT NOT ON THE INTRO OR BRIDGE, PUT SOME LIKE "OHHHHH YEAHHH WHOOOO HOOOOO AT RANDOM THERE INSTEAD!"
-      if (that.section == 'bridge'){
-
-      } else {
-
-      }
-        // console.log('.')
-        // var msg = new SpeechSynthesisUtterance(lik.split("/")[0]);
-        // msg.rate = 0.8
-        // window.speechSynthesis.speak(msg);
-
-      var inter
-      var ii = 0
-      // inter = window.setInterval(function(){
-
-        // HMMM kill
-        // console.log('.')
-      //   if(ii == 16) window.clearInterval(inter)
-      // }, tick / 16.0)
-      // ..../ hmm set interval to updat ethe progress bar, and then wipe it on next run?
-
-
-      // UMMM how to animate the singing...hmmm...there could be magic here...
-      // OH SHIT A PROGRESS BAR DOES THIS EXACTLY! SET IT ON A TIMER FOR THE LENGTH OF THE THING, THEN DUMP IT.
-      // FUCK YEAH FUCK YEAH SCIENCE
 
       if(!that.section) {
         that.stop(that.ac.currentTime)

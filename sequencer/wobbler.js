@@ -1,8 +1,6 @@
 var Sampler = require('./sampler');
-var semi = 5.946
 
 module.exports = function (ac) {
-  var player = new Sampler(ac, 'samples/'+data.name+'.wav');
   var wobbles = {
     a: new Sampler(ac, 'samples/wob3.wav'),
     b: new Sampler(ac, 'samples/wobac.wav'),
@@ -19,7 +17,7 @@ module.exports = function (ac) {
     audioNodes: wobbles,
     start: function (when, arg, shift) {
       arg.forEach(function (arg) {
-        wobbles[arg].pitchBend.value = ~~shift * semi
+        wobbles[arg].pitchBend.setValueAtTime(shift, when)
         wobbles[arg].start(when)
       })
     },

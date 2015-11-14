@@ -1,7 +1,5 @@
 var Sampler = require('./sampler');
-var semi = 5.946
 module.exports = function (ac) {
-  var player = new Sampler(ac, 'samples/'+data.name+'.wav');
   var voices = {
     a: new Sampler(ac, 'samples/scream1.wav'),
     b: new Sampler(ac, 'samples/scream2.wav'),
@@ -17,7 +15,7 @@ module.exports = function (ac) {
     audioNodes: voices,
     start: function (when, arg, shift) {
       arg.forEach(function (arg) {
-        voices[arg].pitchBend.value = ~~shift * semi
+        voices[arg].pitchBend.setValueAtTime(shift, when)
         voices[arg].start(when)
       })
     },
