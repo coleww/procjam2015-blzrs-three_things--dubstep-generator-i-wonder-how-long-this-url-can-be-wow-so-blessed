@@ -12,7 +12,6 @@ module.exports = function (ac) {
     audioNodes: samples,
     start: function (when, arg, shift) {
       arg.forEach(function (arg) {
-
         samples[arg].pitchBend.setValueAtTime(shift, when)
         samples[arg].start(when)
       })
