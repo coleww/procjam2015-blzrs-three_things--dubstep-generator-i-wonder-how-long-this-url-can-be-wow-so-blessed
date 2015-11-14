@@ -15,39 +15,53 @@ var Sequencer = function(data){
   this.sections = data.sections || ["verse", "verse", "verse", "verse", "chorus", "chorus"]
   this.position = 0;
   this.steps = data.steps;
-  this.savedLik = 'ooooweeeeooooo'
+  this.vol = this.ac.createGainNode()
+  this.recorder = new Recorder(this.vol, {workerPath: 'js/recorderjs/recorderWorkerMP3.js'})
 };
+
+Sequencer.prototype.createDownloadLink = function () {
+  var that = this
+  this.recorder && this.recorder.exportAudio(function(blob) {
+    that.recorder.forceDownload(blob)
+    var url = URL.createObjectURL(blob);
+    var hf = document.createElement('a');
+    hf.href = url;
+    hf.download = new Date().toISOString() + '.mp3';
+    hf.innerHTML = hf.download;
+    document.body.appendChild(hf);
+  })
+}
 
 Sequencer.prototype.run = function(){
   var that = this;
   var tick = getTick(that.bpm);
+  this.recorder.record()
   this.interval = window.setInterval(function(){
     that.instruments.forEach(function(instrument){
-      if (instrument.name == 'solo' ) {
-
-        if (that.section == 'bridge') instrument.play(that.position, that.ac, that.key, that.section, tick)
-      } else {
-        instrument.play(that.position, that.ac, that.key, that.section);
-      }
+      instrument.play(that.position, that.ac, that.key, that.section);
     })
     that.position++;
 
 
-    if (that.position == ~~(that.steps / 2)){
-      // var msg = new SpeechSynthesisUtterance(that.savedLik);
-      // // msg.rate = 0.75x
-      // window.speechSynthesis.speak(msg);
-    } else if(that.position >= that.steps) {
+    // if (that.position == ~~(that.steps / 2)){
+    //   // var msg = new SpeechSynthesisUtterance(that.savedLik);
+    //   // // msg.rate = 0.75x
+    //   // window.speechSynthesis.speak(msg);
+    // }
+
+
+    if(that.position >= that.steps) {
 
       // do this less often and only in modulo 2s,
       // let individual instruments update their next for that pattern
-      that.instruments.forEach(function(instrument){
-        instrument.next(that.section);
-      });
+
       that.position = 0;
+      var old = that.section
       that.section = that.sections.shift()
 
-
+      that.instruments.forEach(function(instrument){
+        instrument.next();
+      });
 
 
       // UMMM if there isn't one then i think u should stop? i guess?
@@ -89,6 +103,8 @@ Sequencer.prototype.run = function(){
             i.player.stop(that.ac.currentTime)
           }
         })
+        that.recorder.stop()
+        that.createDownloadLink()
       }
     }
   }, tick);
@@ -97,6 +113,5 @@ Sequencer.prototype.run = function(){
 Sequencer.prototype.stop = function(){
   window.clearInterval(this.interval);
 };
-
 
 module.exports = Sequencer;

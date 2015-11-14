@@ -6,12 +6,19 @@ THREE THINGS
 3. two
 
 
+-----------------------
+
+oscillators dont seem to work?
+
+just use samples instead for everything
+
+gonna be a lot of 0s in this one
 
 
 
 -------------------------------------------
 
-
+all patterns need at least 3 iterations. min and max. exactly i mean, not at least. remember that.
 
 
 ------------------------------------------
