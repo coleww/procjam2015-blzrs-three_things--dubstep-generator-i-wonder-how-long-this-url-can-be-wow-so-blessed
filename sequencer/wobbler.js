@@ -16,10 +16,8 @@ module.exports = function (ac) {
   return {
     audioNodes: wobbles,
     start: function (when, arg, shift) {
-      arg.forEach(function (arg) {
         wobbles[arg].pitchBend.setValueAtTime(shift, when)
         wobbles[arg].start(when)
-      })
     },
     connect: function (destination) {
       Object.keys(wobbles).forEach(function (k) {

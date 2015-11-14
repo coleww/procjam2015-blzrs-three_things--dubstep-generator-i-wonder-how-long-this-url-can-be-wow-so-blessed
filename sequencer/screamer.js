@@ -14,10 +14,8 @@ module.exports = function (ac) {
   return {
     audioNodes: voices,
     start: function (when, arg, shift) {
-      arg.forEach(function (arg) {
         voices[arg].pitchBend.setValueAtTime(shift, when)
         voices[arg].start(when)
-      })
     },
     connect: function (destination) {
       Object.keys(voices).forEach(function (k) {

@@ -25,9 +25,9 @@ Instrument.prototype.play = function(pos, ac, key, section, tick){
   // console.log(pos, key, section, tick, this.sections[section], this.current)
   if(Math.random() < this.sections[section].probs[this.current][pos]){
     if(this.type !== "drum"){
-      var note = -shifts[pick(this.sections[section].notes[this.current][pos])]
+      var note = -(shifts[pick(this.sections[section].notes[this.current][pos])])
       var args = this.sections[section].args[this.current][pos]
-      this.player.start(ac.currentTime, args, note)
+      this.player.start(ac.currentTime, pick(args), note)
     } else {
       this.player.start(ac.currentTime)
     }
