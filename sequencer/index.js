@@ -35,7 +35,7 @@ Sequencer.prototype.createDownloadLink = function () {
 Sequencer.prototype.run = function(){
   var that = this;
   var tick = getTick(that.bpm);
-  this.recorder.record()
+  // this.recorder.record()
   this.interval = window.setInterval(function(){
     that.instruments.forEach(function(instrument){
       instrument.play(that.position, that.ac, that.section);
@@ -66,15 +66,16 @@ Sequencer.prototype.run = function(){
 
       if(!that.section) {
         that.stop(that.ac.currentTime)
+        alert("U REACHED THE ENDING YO!")
         // that.instruments.forEach(function(i){
           // if(i.type !== 'drum') {
           //   i.player.frequency.value = 500
           //   i.player.stop(that.ac.currentTime)
           // }
         // })
-        that.recorder.stop()
-        that.createDownloadLink()
-        throw "up"
+        // that.recorder.stop()
+        // that.createDownloadLink()
+        // throw "up"
       }
     }
   }, tick);

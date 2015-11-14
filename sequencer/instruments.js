@@ -31,8 +31,8 @@ module.exports = function createInstruments(ac, instrumentData, vol){
 
     var gainNode = ac.createGain()
 
-   var g = ~~data.gain - 0.7
-    gainNode.gain.setValueAtTime(g < 0.3 ? 0.3 : g, ac.currentTime)
+   var g = ~~ - 0.7
+    gainNode.gain.setValueAtTime(data.gain, ac.currentTime)
 
     var filter = ac.createBiquadFilter()
     filter.type = data.filterType || 'lowpass'

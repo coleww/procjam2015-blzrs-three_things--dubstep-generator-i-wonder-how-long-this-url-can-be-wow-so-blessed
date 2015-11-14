@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "browserify -t babelify -t uglifyify www/index.js -o www/bundle.js",
-    "watch": "watchify www/index.js -t babelify -o www/bundle.js --debug --verbose"
+    "build": "browserify -t uglifyify www/index.js -o www/bundle.js",
+    "watch": "watchify www/index.js -o www/bundle.js --debug --verbose"
   },
   "devDependencies": {
     "babelify": "^7.2.0",

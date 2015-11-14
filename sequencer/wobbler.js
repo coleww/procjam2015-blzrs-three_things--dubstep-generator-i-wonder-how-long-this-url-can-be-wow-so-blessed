@@ -16,12 +16,18 @@ module.exports = function (ac) {
   return {
     audioNodes: wobbles,
     start: function (when, arg, shift) {
+        console.log("HIGH")
         wobbles[arg].pitchBend.setValueAtTime(shift, when)
         wobbles[arg].start(when)
     },
     connect: function (destination) {
       Object.keys(wobbles).forEach(function (k) {
-        wobbles[k].connect(destination)
+
+        var g = ac.createGain()
+        g.gain.value = 0.35
+
+        wobbles[k].connect(g)
+        g.connect(destination)
       })
     }
   }

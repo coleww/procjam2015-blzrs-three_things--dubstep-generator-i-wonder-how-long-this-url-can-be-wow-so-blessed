@@ -19,7 +19,11 @@ module.exports = function (ac) {
     },
     connect: function (destination) {
       Object.keys(voices).forEach(function (k) {
-        voices[k].connect(destination)
+        var g = ac.createGain()
+        g.gain.value = 0.31
+
+        voices[k].connect(g)
+        g.connect(destination)
       })
     }
   }

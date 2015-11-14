@@ -15,7 +15,12 @@ module.exports = function (ac) {
     },
     connect: function (destination) {
       Object.keys(samples).forEach(function (k) {
-        samples[k].connect(destination)
+
+        var g = ac.createGain()
+        g.gain.value = 0.53
+
+        samples[k].connect(g)
+        g.connect(destination)
       })
     }
   }
