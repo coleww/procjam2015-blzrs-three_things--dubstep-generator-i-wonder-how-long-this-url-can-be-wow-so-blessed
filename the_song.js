@@ -584,27 +584,6 @@ module.exports = {
       }
     },
 
-
-
-
-
-
-
-
-
-// 54321
-// 01234
-// 56789
-
-
-// 0 3 4 2
-// 2 2 3 1
-// 0 0 4323
-
-
-
-
-
     {
       "filterFreq": 15000,
                   "gain": 0.68,
@@ -649,25 +628,11 @@ module.exports = {
         }
       }
     }
- //    {
- //      "filterFreq": 10000,
- //                  "gain": 0.8,
- //                  "distortion": 900,
- //      "name":"solo",
- //      "type":"sawtooth",
- //      "sections": {
- //        "bridge": {
- //          "mod": 1,
- //          "probs":[[0.5, 1, 0.5, 1, 0.5, 1, 0.5, 1, 0.5, 1, 0.5, 1, 0.5, 1, 0.5, 1],
- //                   [0.7326, 1, 0.4, 1, 0.732, 1, 0.3, 1, 0.732, 1, 0.5, 1, 0.4, 1, 0.3, 1]],
- // "nexts":[[0, 1], [1, 0]]
- //        }
- //      }
- //    }
   ],
   "bpm":43,
   "key":{
-    "tonic":"D3",
-    "scale":"minor"},
-  "steps":4
+    "tonic":"D2",
+    "scale":"pentMin"},
+  "steps":4,
+  "sections": ["intro", "intro", "intro", "verse", "verse", "verse", "chorus", "chorus", "bridge", "bridge", "bridge", "verse", "verse", "verse", "chorus", "chorus", "verse", "verse", "chorus", "chorus", "bridge", "bridge", "bridge", "bridge", "chorus", "chorus", "chorus", "chorus", "verse", "verse", "chorus", "chorus", "bridge", "bridge", "bridge", "outro", "bridge", "bridge", "outro", "outro", null]
 }

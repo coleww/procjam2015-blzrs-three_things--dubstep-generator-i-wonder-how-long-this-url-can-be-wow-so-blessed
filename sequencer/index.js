@@ -1,5 +1,5 @@
 var createInstruments = require('./instruments');
-
+var Recorder = require('./recorder')
 function getTick(bpm){
   return ((60 * 1000) / bpm) / 4;
 }
