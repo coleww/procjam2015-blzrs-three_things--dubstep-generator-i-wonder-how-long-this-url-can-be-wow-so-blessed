@@ -15,7 +15,8 @@ module.exports = function createInstruments(ac, instrumentData, vol){
   var insts = {
     wub: require('./wobbler'),
     scream: require('./screamer'),
-    synth: require('./synther')
+    synth: require('./synther'),
+    guitar: require('./guitar')
   }
 
 
@@ -24,13 +25,14 @@ module.exports = function createInstruments(ac, instrumentData, vol){
     if(data.type == 'drum'){
       player = new Sampler(ac, 'samples/' + data.name + '.wav')
     } else {
-      console.log(data.type)
+      // console.log(data.type)
       player = insts[data.type](ac)
     }
 
     var gainNode = ac.createGain()
 
-    gainNode.gain.value = data.gain - 0.2
+   var g = ~~data.gain - 0.7
+    gainNode.gain.setValueAtTime(g < 0.3 ? 0.3 : g, ac.currentTime)
 
     var filter = ac.createBiquadFilter()
     filter.type = data.filterType || 'lowpass'

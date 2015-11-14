@@ -3,8 +3,8 @@ var Sampler = require('./sampler');
 
 module.exports = function (ac) {
   var samples = {
-    bell: new Sampler(ac, 'samples/bellc.wav'),
-    clar: new Sampler(ac, 'samples/clarine.wav')
+    b: new Sampler(ac, 'samples/guitarc1.wav'),
+    a: new Sampler(ac, 'samples/guitarc2.wav')
   }
   return {
     audioNodes: samples,

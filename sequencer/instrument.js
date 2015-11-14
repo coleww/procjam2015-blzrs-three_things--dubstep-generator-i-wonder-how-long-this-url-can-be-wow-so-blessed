@@ -21,15 +21,16 @@ var shifts = [ 0,
   0.8405863490609254 ]
 console.log("UPTO", shifts.length)
 
-Instrument.prototype.play = function(pos, ac, key, section, tick){
-  // console.log(pos, key, section, tick, this.sections[section], this.current)
+Instrument.prototype.play = function(pos, ac, section, tick){
   if(Math.random() < this.sections[section].probs[this.current][pos]){
-    if(this.type !== "drum"){
-      var note = -(shifts[pick(this.sections[section].notes[this.current][pos]) || 0])
-      var args = this.sections[section].args[this.current][pos]
-      this.player.start(ac.currentTime, pick(args), note)
-    } else {
-      this.player.start(ac.currentTime)
+    if (pos % this.sections[section].mod == 0){
+      if(this.type !== "drum"){
+        var note = -(shifts[pick(this.sections[section].notes[this.current][pos]) || 0])
+        var args = this.sections[section].args[this.current][pos]
+        this.player.start(ac.currentTime, pick(args), note)
+      } else {
+        this.player.start(ac.currentTime)
+      }
     }
   }
 }

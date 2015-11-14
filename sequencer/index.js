@@ -10,12 +10,12 @@ var Sequencer = function(data){
   this.bpm = data.bpm;
   this.instruments = createInstruments(this.ac, data.instruments);
   this.interval = null;
-  this.key = data.key;
   this.section = data.section || "intro"
   this.sections = data.sections || ["verse", "verse", "verse", "verse", "chorus", "chorus"]
   this.position = 0;
   this.steps = data.steps;
   this.vol = this.ac.createGain()
+  this.vol.gain.setValueAtTime(0.151, this.ac.currentTime)
   this.recorder = new Recorder(this.vol, {workerPath: 'js/recorderjs/recorderWorkerMP3.js'})
 };
 
@@ -38,7 +38,7 @@ Sequencer.prototype.run = function(){
   this.recorder.record()
   this.interval = window.setInterval(function(){
     that.instruments.forEach(function(instrument){
-      instrument.play(that.position, that.ac, that.key, that.section);
+      instrument.play(that.position, that.ac, that.section);
     })
     that.position++;
 
@@ -66,14 +66,15 @@ Sequencer.prototype.run = function(){
 
       if(!that.section) {
         that.stop(that.ac.currentTime)
-        that.instruments.forEach(function(i){
-          if(i.type !== 'drum') {
-            i.player.frequency.value = 500
-            i.player.stop(that.ac.currentTime)
-          }
-        })
+        // that.instruments.forEach(function(i){
+          // if(i.type !== 'drum') {
+          //   i.player.frequency.value = 500
+          //   i.player.stop(that.ac.currentTime)
+          // }
+        // })
         that.recorder.stop()
         that.createDownloadLink()
+        throw "up"
       }
     }
   }, tick);
