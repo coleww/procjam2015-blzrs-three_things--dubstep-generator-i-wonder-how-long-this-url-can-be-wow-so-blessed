@@ -1,4 +1,6 @@
 var Sampler = require('./sampler');
+
+var loadSample2Buff = require('load-sample-2-buff')
 module.exports = function (ac) {
   var voices = {
     a: new Sampler(ac, 'samples/scream1.wav'),
@@ -18,13 +20,19 @@ module.exports = function (ac) {
         voices[arg].start(when)
     },
     connect: function (destination) {
+      // var convolver = ac.createConvolver();
+      // loadSample2Buff(ac, 'concert-crowd.ogg', function(buffer){
+      //   convolver.buffer = buffer
+      // })
       Object.keys(voices).forEach(function (k) {
         var g = ac.createGain()
-        g.gain.value = 0.31
+        g.gain.value = 0.1
 
         voices[k].connect(g)
         g.connect(destination)
       })
+
+      // convolver.connect(destination)
     }
   }
 
