@@ -8,28 +8,14 @@ THREE THINGS
 
 -----------------------
 
-oscillators dont seem to work?
-
-just use samples instead for everything
-
-gonna be a lot of 0s in this one
-
-
-
--------------------------------------------
-
-all patterns need at least 3 iterations. min and max. exactly i mean, not at least. remember that.
-
-
 ------------------------------------------
 
 ### development
 
  oh no dont even bother
 
+ but if yr interested in working on this kind of stuff or learning more open an issue or email me or tweet or whatever i swear im friendlier than my code is
 
 
 
----------------------------------------------
-
-https://www.npmjs.com/package/recorderjs
+uses recorderjsmp3 for which the readme with license info should be present

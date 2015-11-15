@@ -21,8 +21,17 @@ var speaks = [
 '2. ' + queneauBuckets.fill(5),
 '3. ' + queneauBuckets.fill(5),
 'THE END']
+// var fileName = 'a'
+var fileName = speaks.slice(0, 3).map(function(l){
+  var chars = l.split('')
+  l = l[0] + l.substr(2)
+  return l
+}).join('-').replace(/\s/g, '_').replace(/\W/g, '')
 
+// console.log(fileName)
+//
 
+// console.log(fileName)
 var Sampler = require('./sampler');
 
 
@@ -64,7 +73,7 @@ var Sequencer = function(data, worker){
   this.vol.connect(this.post)
   this.post.connect(this.ac.destination)
   this.recorder = new Recorder(this.post, {}, worker)
-  this.recorder.record()
+
   this.instruments = createInstruments(this.ac, data.instruments, this.vol);
   var that = this
   this.vox.forEach(function (v) {
@@ -83,6 +92,7 @@ var Sequencer = function(data, worker){
   }, 3000)
 
   window.setTimeout(function(){
+    that.recorder.record()
     that.vox.shift().start(that.ac.currentTime)
 
     boom.start(that.ac.currentTime + 1.8)
@@ -203,7 +213,7 @@ Sequencer.prototype.run = function(){
         that.recorder.exportAudio(function (b) {
           console.log("GOT A WAV")
 
-          Recorder.forceDownload(b, "BLZRS - 3 Things " + new Date().getTime() + '.mp3')
+          Recorder.forceDownload(b, "BLZRS--3_Things--" + fileName + '.mp3')
         })
         // alert("U REACHED THE ENDING YO!")
         // that.instruments.forEach(function(i){
