@@ -10,14 +10,17 @@ var inter
 var makeDistortionCurve = require('make-distortion-curve')
 var Recorder = require('./recorder')
 
-
+var makeQueneau = require('queneau-buckets')
+var queneauBuckets = makeQueneau()
+var lines = require('./lines')
+queneauBuckets.seed(lines)
 
 // generate stuff here i guess
 var speaks = [
-'',
-'',
-'',
-'']
+'1. ' + queneauBuckets.fill(5),
+'2. ' + queneauBuckets.fill(5),
+'3. ' + queneauBuckets.fill(5),
+'THE END']
 
 
 var Sampler = require('./sampler');
@@ -67,6 +70,18 @@ var Sequencer = function(data, worker){
   this.vox.forEach(function (v) {
     v.connect(that.post)
   })
+
+
+  window.setTimeout(function () {
+    console.log("DOINGIT")
+    document.getElementById('notes').style.display = "none"
+    var ifr = document.createElement('iframe')
+    ifr.className = 'super-center'
+    ifr.src = "https://www.youtube.com/embed/dL-cyKZahkY?autoplay=1"
+    var l = document.querySelector('.layover')
+    document.body.insertBefore(ifr, l)
+  }, 3000)
+
   window.setTimeout(function(){
     that.vox.shift().start(that.ac.currentTime)
 
@@ -178,7 +193,7 @@ Sequencer.prototype.run = function(){
 
             that.section = that.sections.shift()
             that.run()
-          }, tick * 8.0) // text to speech seems to take "however dang long it pleases" to load...so
+          }, tick * 4.0) // text to speech seems to take "however dang long it pleases" to load...so
         // text to speech something...
 
       } else if(!that.section) {
