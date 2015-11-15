@@ -56,16 +56,16 @@ var Sequencer = function(data, worker){
   this.post = this.ac.createGain()
   this.vol = this.ac.createGain()
   this.vox = [
-  Sampler(this.ac, '../www/samples/vox-01.wav'),
-  Sampler(this.ac, '../www/samples/vox-02.wav'),
-  Sampler(this.ac, '../www/samples/vox-03.wav'),
-  Sampler(this.ac, '../www/samples/vox-04.wav'),
-  Sampler(this.ac, '../www/samples/vox-05.wav'),
+  Sampler(this.ac, 'samples/vox-01.wav'),
+  Sampler(this.ac, 'samples/vox-02.wav'),
+  Sampler(this.ac, 'samples/vox-03.wav'),
+  Sampler(this.ac, 'samples/vox-04.wav'),
+  Sampler(this.ac, 'samples/vox-05.wav'),
 ]
   // this.vox[0].start()
 
   this.globalMod = 1
-  var boom = Sampler(this.ac, '../www/samples/drop.wav')
+  var boom = Sampler(this.ac, 'samples/drop.wav')
   boom.connect(this.post)
   this.vol.gain.setValueAtTime(0, this.ac.currentTime)
 
@@ -151,6 +151,7 @@ Sequencer.prototype.run = function(){
     })
     that.position++;
 
+  console.log('running')
 
     // if (that.position == ~~(that.steps / 2)){
 
