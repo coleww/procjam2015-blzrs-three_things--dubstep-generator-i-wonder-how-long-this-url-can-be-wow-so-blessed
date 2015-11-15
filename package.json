@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "browserify -t uglifyify www/index.js -o www/bundle.js",
-    "watch": "watchify www/index.js -o www/bundle.js --debug --verbose"
+    "build": "browserify -t uglifyify -t workerify www/index.js -o www/bundle.js",
+    "watch": "watchify www/index.js -o www/bundle.js -t workerify --debug --verbose"
   },
   "devDependencies": {
     "@coleww/openmusic-sample-player": "1.0.2",

@@ -3,14 +3,14 @@
   var WORKER_WAV_PATH = 'recorderWorker.js';
   var WORKER_MP3_PATH = 'recorderWorkerMP3.js';
 
-  var Recorder =  function(source, cfg){
+  var Recorder =  function(source, cfg, worker){
     var config = cfg || {};
     var bufferLen = config.bufferLen || 4096;
     this.context = source.context;
     this.node = (this.context.createScriptProcessor ||
                  this.context.createJavaScriptNode).call(this.context,
                                                          bufferLen, 2, 2);
-    var worker = new Worker(config.workerPath || WORKER_WAV_PATH);
+
     worker.postMessage({
       command: 'init',
       config: {
@@ -80,6 +80,7 @@
     var link = window.document.createElement('a');
     link.href = url;
     link.download = filename || 'output.wav';
+    document.body.appendChild(link)
     var click = document.createEvent("Event");
     click.initEvent("click", true, true);
     link.dispatchEvent(click);

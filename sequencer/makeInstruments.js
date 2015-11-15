@@ -18,7 +18,7 @@ module.exports = function createInstruments(ac, instrumentData, vol){
   instrumentData.forEach(function(data){
     var player;
     if(data.type == 'drum'){
-      player = new Sampler(ac, 'samples/' + data.name + '.wav')
+      player = Sampler(ac, 'samples/' + data.name + '.wav')
     } else {
       // console.log(data.type)
       player = insts[data.type](ac)

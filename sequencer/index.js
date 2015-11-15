@@ -4,20 +4,32 @@ function getTick(bpm){
 }
 var shuffle = require('shuffle-array')
 var bpms = shuffle([140, 110, 97, 83, 73, 127])
-var speaks = ['eye got three things to tell you', 'one', 'two', 'three', 'task complete']
+
 var steps = shuffle([12, 9, 16, 16, 8, 12])
 var inter
 var makeDistortionCurve = require('make-distortion-curve')
-var Recorder = require('recorderjs')
+var Recorder = require('./recorder')
 
-var Sequencer = function(data){
-  var msg = new SpeechSynthesisUtterance(speaks.shift());
-  msg.rate = 0.75//s
-  msg.volume = 1
-  msg.pitch = 0.5
-  // that.stop(that.ac.currentTime)
 
-  window.speechSynthesis.speak(msg);
+
+// generate stuff here i guess
+var speaks = [
+'',
+'',
+'',
+'']
+
+
+var Sampler = require('./sampler');
+
+
+
+
+
+
+var Sequencer = function(data, worker){
+
+
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
   this.direction = Math.random() < 0.5 ? -1.0 : 1.0
   this.divis = 1
@@ -29,14 +41,37 @@ var Sequencer = function(data){
   this.sections = data.sections || ["verse", "verse", "verse", "verse", "chorus", "chorus"]
   this.position = 0;
   this.steps = data.steps;
+  this.post = this.ac.createGain()
   this.vol = this.ac.createGain()
+  this.vox = [
+  Sampler(this.ac, '../www/samples/vox-01.wav'),
+  Sampler(this.ac, '../www/samples/vox-02.wav'),
+  Sampler(this.ac, '../www/samples/vox-03.wav'),
+  Sampler(this.ac, '../www/samples/vox-04.wav'),
+  Sampler(this.ac, '../www/samples/vox-05.wav'),
+]
+  // this.vox[0].start()
+
   this.globalMod = 1
+  var boom = Sampler(this.ac, '../www/samples/drop.wav')
+  boom.connect(this.post)
   this.vol.gain.setValueAtTime(0, this.ac.currentTime)
-  this.recorder = new Recorder(this.vol, {workerPath: '../node_modules/recorderjs/recorderWorker.js'})
+
+  this.vol.gain.setValueAtTime(0.75, this.ac.currentTime + 9)
+  this.vol.connect(this.post)
+  this.post.connect(this.ac.destination)
+  this.recorder = new Recorder(this.post, {}, worker)
   this.recorder.record()
-  this.vol.gain.setValueAtTime(0.75, this.ac.currentTime + 3)
-  this.vol.connect(this.ac.destination)
   this.instruments = createInstruments(this.ac, data.instruments, this.vol);
+  var that = this
+  this.vox.forEach(function (v) {
+    v.connect(that.post)
+  })
+  window.setTimeout(function(){
+    that.vox.shift().start(that.ac.currentTime)
+
+    boom.start(that.ac.currentTime + 1.8)
+  }, 7000)
 };
 
 
@@ -108,11 +143,14 @@ Sequencer.prototype.run = function(){
 
       if (that.section == 'speak') {
         // console.log("PEAKING")
-          var msg = new SpeechSynthesisUtterance(speaks.shift());
+        var say = speaks.shift()
+          // var msg = new SpeechSynthesisUtterance(say);
           // msg.rate = 0.75//s
           that.stop(that.ac.currentTime)
+          document.getElementById('talky').textContent = say
+          // window.speechSynthesis.speak(msg);
+          that.vox.shift().start(that.ac.currentTime)
 
-          window.speechSynthesis.speak(msg);
           window.setTimeout(function () {
             // CHANGE THE GLOBAL SETTING THINGS HERE!!!!
 
@@ -140,16 +178,17 @@ Sequencer.prototype.run = function(){
 
             that.section = that.sections.shift()
             that.run()
-          }, 1750) // text to speech seems to take "however dang long it pleases" to load...so
+          }, tick * 8.0) // text to speech seems to take "however dang long it pleases" to load...so
         // text to speech something...
 
       } else if(!that.section) {
 
         that.stop(that.ac.currentTime)
         that.recorder.stop()
-        that.recorder.exportWAV(function (b) {
+        that.recorder.exportAudio(function (b) {
           console.log("GOT A WAV")
-          that.recorder.forceDownload(b)
+
+          Recorder.forceDownload(b, "BLZRS - 3 Things " + new Date().getTime() + '.mp3')
         })
         // alert("U REACHED THE ENDING YO!")
         // that.instruments.forEach(function(i){
